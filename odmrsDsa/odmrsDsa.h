@@ -22,8 +22,30 @@ void push(GenericStack *gs, const void *value);
 void *pop(GenericStack *gs, void *out);
 // ----------------------------------------------- ;
 
+// Queue
+typedef struct {
+  void *data;
+  size_t typeSize;
+  int size;
+  int capacity;
+
+  int head;
+  int tail;
+} GenericQueue;
+
+void initQueue(GenericQueue *gq, size_t typeOfQueue);
+void reorgQueue(GenericQueue *gq, int oldCap);
+void enqueue(GenericQueue *gq, int *value);
+int isQueueEmpty(GenericQueue *gq);
+void *dequeue(GenericQueue *gq, void *out);
+void destroyQueue(GenericQueue *gq);
+
+// ----------------------------------------------- ;
+
 // UTILS
-void myMemcpy(void *dst, const void* src, size_t size);
+void myMemcpy(void *dst, const void *src, size_t size);
 void myMemset(void *dst, int val, size_t size);
 
 #endif
+
+// ----------------------------------------------- ;
