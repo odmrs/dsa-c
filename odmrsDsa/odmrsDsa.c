@@ -6,7 +6,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 // Stack
 void init(GenericStack *gs, size_t stackTypeSize) {
   gs->size = 0;
@@ -38,7 +37,7 @@ void push(GenericStack *gs, const void *value) {
     gs->data = tmp;
   }
 
-  memcpy((char *)gs->data + gs->size * gs->sizeActualType, value,
+  myMemcpy((char *)gs->data + gs->size * gs->sizeActualType, value,
          gs->sizeActualType);
 
   gs->size++;
@@ -61,9 +60,9 @@ void *pop(GenericStack *gs, void *out) {
     return NULL;
   }
 
-  memcpy(out, (char *)gs->data + (gs->size - 1) * gs->sizeActualType,
+  myMemcpy(out, (char *)gs->data + (gs->size - 1) * gs->sizeActualType,
          gs->sizeActualType);
-  memset((char *)gs->data + (gs->size - 1) * gs->sizeActualType, 0,
+  myMemset((char *)gs->data + (gs->size - 1) * gs->sizeActualType, 0,
          gs->sizeActualType);
 
   gs->size--;
@@ -72,3 +71,21 @@ void *pop(GenericStack *gs, void *out) {
 }
 
 // ----------------------------------------------------------------------------;
+// Utils
+
+void myMemcpy(void *dst, const void *src, size_t size){
+  char *cursorDst = (char *)dst;
+  const char *cursorSrc = (char *)src;
+
+  for (size_t i = 0; i < size; i++) {
+    *cursorDst++ = *cursorSrc++;
+  }
+}
+
+void myMemset(void *dst, int val, size_t size){
+  unsigned char *cursor = dst;
+
+  for (size_t i = 0; i < size; i++) {
+    *(cursor + i) = (unsigned char)val;
+  }
+}
