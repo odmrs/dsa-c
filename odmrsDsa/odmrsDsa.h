@@ -22,4 +22,8 @@ void push(GenericStack *gs, const void *value);
 void *pop(GenericStack *gs, void *out);
 // ----------------------------------------------- ;
 
+// UTILS
+void myMemcpy(void *dst, const void* src, size_t size);
+void myMemset(void *dst, int val, size_t size);
+
 #endif

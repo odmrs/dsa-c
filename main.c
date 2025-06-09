@@ -1,8 +1,8 @@
 //
 // Created by odmrs on 31/05/2025.
 
-#include "odmrsDsa/odmrsDsa.h"
 #include <stdlib.h>
+#include "./odmrsDsa/odmrsDsa.h"
 
 int main() {
   GenericStack *floatStack = malloc(sizeof(GenericStack));
