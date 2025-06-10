@@ -5,40 +5,57 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void print_int(void *p) { printf("%d", *(int *)p); }
-void print_queue(GenericQueue *gq, void (*print_fn)(void *)) {
-  printf("Queue (size=%d, cap=%d): [", gq->size, gq->capacity);
-  for (int i = 0; i < gq->size; i++) {
-    int index = (gq->head + i) % gq->capacity;
-    if (i > 0)
-      printf(", ");
-    print_fn((char *)gq->data + index * gq->typeSize);
+typedef struct Node {
+  int value;
+  struct Node *next;
+} Node;
+
+typedef struct {
+  Node *head;
+} LinkedList;
+
+Node *createNode(int value) {
+  Node *newNode = malloc(sizeof(Node));
+  if (newNode == NULL) {
+    return NULL;
   }
-  printf("]\n");
+
+  newNode->next = NULL;
+  newNode->value = value;
+
+  return newNode;
+}
+
+void insertHead(LinkedList *ll, int value) {
+  Node *newNode = createNode(value);
+
+  newNode->next = ll->head;
+  ll->head = newNode;
+}
+
+void printLinkedList(LinkedList *ll) {
+  Node *cursor = ll->head;
+
+  printf("Linked List: ");
+  while (cursor != NULL) {
+    printf("%d -> ", cursor->value);
+    cursor = cursor->next;
+  }
+
+  printf("NULL;\n");
 }
 
 int main() {
-  GenericQueue *gqInt =
-      (GenericQueue *)calloc(sizeof(GenericQueue), sizeof(int));
-  initQueue(gqInt, sizeof(int));
-  int values[] = {3, 4, 1, 8, 2};
-  int outInt = 0;
+  LinkedList *intList = (LinkedList *)malloc(sizeof(LinkedList));
+  intList->head = NULL;
+  insertHead(intList, 5);
+  insertHead(intList, 5);
+  insertHead(intList, 5);
+  insertHead(intList, 5);
+  insertHead(intList, 5);
 
-  enqueue(gqInt, &values[0]);
-  print_queue(gqInt, print_int);
-  enqueue(gqInt, &values[1]);
-  print_queue(gqInt, print_int);
-  dequeue(gqInt, &outInt);
-  printf("Dequeued: %d\n", outInt);
-  print_queue(gqInt, print_int);
-  enqueue(gqInt, &values[2]);
-  print_queue(gqInt, print_int);
-  enqueue(gqInt, &values[3]);
-  print_queue(gqInt, print_int);
-  dequeue(gqInt, &outInt);
-  printf("Dequeued: %d\n", outInt);
-  print_queue(gqInt, print_int);
-  enqueue(gqInt, &values[4]);
-  print_queue(gqInt, print_int);
-  destroyQueue(gqInt);
+  printLinkedList(intList);
+
+  free(intList);
+  return 0;
 }
