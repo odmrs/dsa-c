@@ -12,6 +12,7 @@ typedef struct Node {
 
 typedef struct {
   Node *head;
+  Node *tail;
 } LinkedList;
 
 Node *createNode(int value) {
@@ -105,17 +106,31 @@ void printReverseLinkedListUsingRecursion(Node *no) {
   printf("NULL\n");
 }
 
+void insertTailOdNLinkedList(LinkedList *ll, int value) {
+  Node *newNode = createNode(value);
+  if (newNode == NULL) {
+    return;
+  }
+
+  if (linkedListIsEmpty(ll)) {
+    ll->head = newNode;
+    ll->tail = newNode;
+  } else {
+    ll->tail->next = newNode;
+    ll->tail = newNode;
+  }
+}
+
 int main() {
   LinkedList *intList = (LinkedList *)malloc(sizeof(LinkedList));
   intList->head = NULL;
-  insertHead(intList, 5);
-  insertHead(intList, 4);
-  insertHead(intList, 3);
-  insertHead(intList, 2);
-  insertHead(intList, 1);
-  insertNodeTail(intList, 6);
+  intList->tail = NULL;
 
-  printReverseLinkedListUsingRecursion(intList->head);
+  insertTailOdNLinkedList(intList, 6);
+  insertTailOdNLinkedList(intList, 7);
+  insertTailOdNLinkedList(intList, 8);
+
+  printLinkedList(intList);
   free(intList);
   return 0;
 }
