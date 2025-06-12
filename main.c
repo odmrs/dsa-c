@@ -37,7 +37,7 @@ void printLinkedList(LinkedList *ll) {
   printf("Linkedlist: ");
   Node *cursor = ll->head;
   while (cursor != NULL) {
-    printf("%d -> ", cursor->data);
+    printf("%d[%p] -> ", cursor->data, cursor);
     cursor = cursor->next;
   }
 
@@ -121,6 +121,23 @@ void insertTailOdNLinkedList(LinkedList *ll, int value) {
   }
 }
 
+Node *findNodeByValueLinkedList(LinkedList *ll, int searchValue) {
+  if (linkedListIsEmpty(ll)) {
+    return NULL;
+  }
+
+  Node *cursor = ll->head;
+  while (cursor != NULL) {
+    if (cursor->data == searchValue) {
+      return cursor;
+    }
+
+    cursor = cursor->next;
+  }
+
+  return cursor;
+}
+
 int main() {
   LinkedList *intList = (LinkedList *)malloc(sizeof(LinkedList));
   intList->head = NULL;
@@ -129,8 +146,16 @@ int main() {
   insertTailOdNLinkedList(intList, 6);
   insertTailOdNLinkedList(intList, 7);
   insertTailOdNLinkedList(intList, 8);
+  Node *foundedNode = findNodeByValueLinkedList(intList, 6);
+  if (foundedNode == NULL) {
+    printf("No node founded with this value");
+    return -1;
+  }
 
   printLinkedList(intList);
+  printf("Node founded getting the value 6 -> data: %d | address: %p\n",
+         foundedNode->data, foundedNode);
   free(intList);
+  free(foundedNode);
   return 0;
 }
