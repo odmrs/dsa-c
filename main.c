@@ -91,6 +91,20 @@ void printReverseLinkedListUsingStack(LinkedList *ll) {
   destroy(intStack);
 }
 
+void recursionLinkedList(Node *no) {
+  if (no == NULL) {
+    return;
+  }
+
+  recursionLinkedList(no->next);
+  printf("%d -> ", no->data);
+}
+
+void printReverseLinkedListUsingRecursion(Node *no) {
+  recursionLinkedList(no);
+  printf("NULL\n");
+}
+
 int main() {
   LinkedList *intList = (LinkedList *)malloc(sizeof(LinkedList));
   intList->head = NULL;
@@ -101,9 +115,7 @@ int main() {
   insertHead(intList, 1);
   insertNodeTail(intList, 6);
 
-  printLinkedList(intList);
-  printReverseLinkedListUsingStack(intList);
-
+  printReverseLinkedListUsingRecursion(intList->head);
   free(intList);
   return 0;
 }
