@@ -65,40 +65,14 @@ void insertNodeTail(LinkedList *ll, int value) {
   newNode->next = NULL;
 }
 
-void printReverseLinkedListUsingStack(LinkedList *ll) {
-  if (linkedListIsEmpty(ll)) {
-    printf("Reversed Linked list: NULL");
-    return;
-  }
-
-  GenericStack *intStack = malloc(sizeof(GenericStack));
-  init(intStack, sizeof(int));
-
-  Node *cursor = ll->head;
-  while (cursor != NULL) {
-    push(intStack, &cursor->data);
-    cursor = cursor->next;
-  }
-
-  printf("Reversed linked list: ");
-  int out = 0;
-  while (intStack->size != 0) {
-    pop(intStack, &out);
-    printf("%d -> ", out);
-  }
-
-  printf("NULL\n");
-  destroy(intStack);
-}
-
 int main() {
   LinkedList *intList = (LinkedList *)malloc(sizeof(LinkedList));
   intList->head = NULL;
-  insertHead(intList, 5);
-  insertHead(intList, 4);
-  insertHead(intList, 3);
-  insertHead(intList, 2);
-  insertHead(intList, 1);
+  // insertHead(intList, 5);
+  // insertHead(intList, 4);
+  // insertHead(intList, 3);
+  // insertHead(intList, 2);
+  // insertHead(intList, 1);
   insertNodeTail(intList, 6);
 
   printLinkedList(intList);
