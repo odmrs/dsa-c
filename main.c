@@ -138,6 +138,38 @@ Node *findNodeByValueLinkedList(LinkedList *ll, int searchValue) {
   return cursor;
 }
 
+int removeNodeByValue(LinkedList *ll, int target) {
+  Node *cursor = ll->head;
+
+  if (linkedListIsEmpty(ll)) {
+    printf("Linked list is emtpy");
+    return 0;
+  }
+
+  if (cursor->data == target) {
+    Node *toRemove = ll->head;
+    ll->head = toRemove->next;
+    free(toRemove);
+    return 1;
+  }
+
+  while (cursor->next != NULL) {
+    if (cursor->next->data == target) {
+      Node *toRemove = cursor->next;
+      cursor->next = toRemove->next;
+
+      free(toRemove);
+      return 1;
+    }
+
+    cursor = cursor->next;
+  }
+
+  printf("Value not found \n");
+
+  return 0;
+}
+
 int main() {
   LinkedList *intList = (LinkedList *)malloc(sizeof(LinkedList));
   intList->head = NULL;
@@ -146,16 +178,13 @@ int main() {
   insertTailOdNLinkedList(intList, 6);
   insertTailOdNLinkedList(intList, 7);
   insertTailOdNLinkedList(intList, 8);
-  Node *foundedNode = findNodeByValueLinkedList(intList, 6);
-  if (foundedNode == NULL) {
-    printf("No node founded with this value");
-    return -1;
-  }
 
   printLinkedList(intList);
-  printf("Node founded getting the value 6 -> data: %d | address: %p\n",
-         foundedNode->data, foundedNode);
+
+  removeNodeByValue(intList, 8);
+
+  printLinkedList(intList);
+
   free(intList);
-  free(foundedNode);
   return 0;
 }
