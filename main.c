@@ -195,21 +195,32 @@ int removeTail(LinkedList *ll) {
   return 1;
 }
 
+int destroyLinkedList(LinkedList *ll) {
+  Node *cursor = ll->head;
+
+  while (cursor != NULL) {
+    Node *next = cursor->next;
+    free(cursor);
+    cursor = next;
+  }
+
+  free(ll);
+  ll->head == NULL;
+  ll->tail == NULL;
+  return 1;
+}
+
 int main() {
   LinkedList *intList = (LinkedList *)malloc(sizeof(LinkedList));
   intList->head = NULL;
   intList->tail = NULL;
 
-  insertTailOdNLinkedList(intList, 6);
-  insertTailOdNLinkedList(intList, 7);
-  insertTailOdNLinkedList(intList, 8);
+  insertAtTailOptimized(intList, 6);
+  insertAtTailOptimized(intList, 7);
+  insertAtTailOptimized(intList, 8);
 
   printLinkedList(intList);
 
-  // removeNodeByValue(intList, 8);
-  removeTail(intList);
-  printLinkedList(intList);
-
-  free(intList);
+  destroyLinkedList(intList);
   return 0;
 }
