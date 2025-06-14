@@ -42,6 +42,33 @@ void destroyQueue(GenericQueue *gq);
 
 // ----------------------------------------------- ;
 
+// Linked List
+typedef struct Node {
+  int data;
+  struct Node *next;
+} Node;
+
+typedef struct {
+  Node *head;
+  Node *tail;
+} LinkedList;
+
+// Core LinkedList functions
+Node *createNode(int value);
+void insertAtHead(LinkedList *ll, int value);
+void insertAtTail(LinkedList *ll, int value);
+void insertAtTailOptimized(LinkedList *ll, int value);
+int removeNodeByValue(LinkedList *ll, int target);
+int removeTail(LinkedList *ll);
+Node *findNodeByValue(LinkedList *ll, int searchValue);
+int isLinkedListEmpty(LinkedList *ll);
+void printLinkedList(LinkedList *ll);
+void printReverseUsingStack(LinkedList *ll);
+void printReverseUsingRecursion(Node *node);
+int destroyLinkedList(LinkedList *ll);
+
+// ----------------------------------------------- ;
+
 // UTILS
 void myMemcpy(void *dst, const void *src, size_t size);
 void myMemset(void *dst, int val, size_t size);

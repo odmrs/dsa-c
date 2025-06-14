@@ -148,6 +148,205 @@ void destroyQueue(GenericQueue *gq) {
 }
 // ----------------------------------------------------------------------------;
 
+// Linked List
+
+Node *createNode(int value) {
+  Node *newNode = (Node *)malloc(sizeof(Node));
+  if (newNode == NULL) {
+    return NULL;
+  }
+  newNode->data = value;
+  newNode->next = NULL;
+
+  return newNode;
+}
+
+void insertAtHead(LinkedList *ll, int value) {
+  Node *node = createNode(value);
+
+  node->next = ll->head;
+  ll->head = node;
+}
+
+void printLinkedList(LinkedList *ll) {
+  printf("Linkedlist: ");
+  Node *cursor = ll->head;
+  while (cursor != NULL) {
+    printf("%d[%p] -> ", cursor->data, cursor);
+    cursor = cursor->next;
+  }
+
+  printf("NULL\n");
+}
+
+int isLinkedListEmpty(LinkedList *ll) {
+  if (ll->head == NULL) {
+    return 1;
+  }
+
+  return 0;
+}
+
+void insertAtTail(LinkedList *ll, int value) {
+  if (isLinkedListEmpty(ll)) {
+    return;
+  }
+  Node *newNode = createNode(value);
+  Node *cursor = ll->head;
+  while (cursor->next != NULL) {
+    cursor = cursor->next;
+  }
+
+  cursor->next = newNode;
+  newNode->next = NULL;
+}
+
+void printReverseUsingStack(LinkedList *ll) {
+  if (isLinkedListEmpty(ll)) {
+    printf("Reversed Linked list: NULL");
+    return;
+  }
+
+  GenericStack *intStack = malloc(sizeof(GenericStack));
+  init(intStack, sizeof(int));
+
+  Node *cursor = ll->head;
+  while (cursor != NULL) {
+    push(intStack, &cursor->data);
+    cursor = cursor->next;
+  }
+
+  printf("Reversed linked list: ");
+  int out = 0;
+  while (intStack->size != 0) {
+    pop(intStack, &out);
+    printf("%d -> ", out);
+  }
+
+  printf("NULL\n");
+  destroy(intStack);
+}
+
+void recursionLinkedList(Node *no) {
+  if (no == NULL) {
+    return;
+  }
+
+  recursionLinkedList(no->next);
+  printf("%d -> ", no->data);
+}
+
+void printReverseUsingRecursion(Node *no) {
+  recursionLinkedList(no);
+  printf("NULL\n");
+}
+
+void insertAtTailOptimized(LinkedList *ll, int value) {
+  Node *newNode = createNode(value);
+  if (newNode == NULL) {
+    return;
+  }
+
+  if (isLinkedListEmpty(ll)) {
+    ll->head = newNode;
+    ll->tail = newNode;
+  } else {
+    ll->tail->next = newNode;
+    ll->tail = newNode;
+  }
+}
+
+Node *findNodeByValue(LinkedList *ll, int searchValue) {
+  if (isLinkedListEmpty(ll)) {
+    return NULL;
+  }
+
+  Node *cursor = ll->head;
+  while (cursor != NULL) {
+    if (cursor->data == searchValue) {
+      return cursor;
+    }
+
+    cursor = cursor->next;
+  }
+
+  return cursor;
+}
+
+int removeNodeByValue(LinkedList *ll, int target) {
+  Node *cursor = ll->head;
+
+  if (isLinkedListEmpty(ll)) {
+    printf("Linked list is emtpy");
+    return 0;
+  }
+
+  if (cursor->data == target) {
+    Node *toRemove = ll->head;
+    ll->head = toRemove->next;
+    free(toRemove);
+    return 1;
+  }
+
+  while (cursor->next != NULL) {
+    if (cursor->next->data == target) {
+      Node *toRemove = cursor->next;
+      cursor->next = toRemove->next;
+
+      free(toRemove);
+      return 1;
+    }
+
+    cursor = cursor->next;
+  }
+
+  printf("Value not found \n");
+
+  return 0;
+}
+
+int removeTail(LinkedList *ll) {
+  if (isLinkedListEmpty(ll)) {
+    printf("Linked list is empty");
+    return 0;
+  }
+
+  Node *cursor = ll->head;
+
+  // Verify if the first already is the tail
+  if (cursor->next == NULL) {
+    ll->head = NULL;
+    return 1;
+  }
+
+  while (cursor->next->next != NULL) {
+    cursor = cursor->next;
+  }
+
+  Node *toRemove = cursor->next;
+  cursor->next = NULL;
+  free(toRemove);
+
+  return 1;
+}
+
+int destroyLinkedList(LinkedList *ll) {
+  Node *cursor = ll->head;
+
+  while (cursor != NULL) {
+    Node *next = cursor->next;
+    free(cursor);
+    cursor = next;
+  }
+
+  free(ll);
+  ll->head == NULL;
+  ll->tail == NULL;
+  return 1;
+}
+
+// ----------------------------------------------------------------------------;
+
 // Utils
 
 void myMemcpy(void *dst, const void *src, size_t size) {
