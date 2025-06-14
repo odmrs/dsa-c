@@ -170,6 +170,31 @@ int removeNodeByValue(LinkedList *ll, int target) {
   return 0;
 }
 
+int removeTail(LinkedList *ll) {
+  if (linkedListIsEmpty(ll)) {
+    printf("Linked list is empty");
+    return 0;
+  }
+
+  Node *cursor = ll->head;
+
+  // Verify if the first already is the tail
+  if (cursor->next == NULL) {
+    ll->head = NULL;
+    return 1;
+  }
+
+  while (cursor->next->next != NULL) {
+    cursor = cursor->next;
+  }
+
+  Node *toRemove = cursor->next;
+  cursor->next = NULL;
+  free(toRemove);
+
+  return 1;
+}
+
 int main() {
   LinkedList *intList = (LinkedList *)malloc(sizeof(LinkedList));
   intList->head = NULL;
@@ -181,8 +206,8 @@ int main() {
 
   printLinkedList(intList);
 
-  removeNodeByValue(intList, 8);
-
+  // removeNodeByValue(intList, 8);
+  removeTail(intList);
   printLinkedList(intList);
 
   free(intList);
